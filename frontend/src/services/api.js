@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-    baseURL: "http://api.timezonedb.com/v2.1",
+    baseURL: "http://localhost:3001/api",
 })
 
 export default api; 

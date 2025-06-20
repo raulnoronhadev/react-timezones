@@ -4,17 +4,12 @@ import Autocomplete from '@mui/material/Autocomplete';
 import api from '../services/api.js';
 
 export default function ComboBox() {
-    const [timezoneList, setTimezoneList] = useState();
+    const [timezoneList, setTimezoneList] = useState([]);
 
     useEffect(() => {
         const fetchTimezoneList = async () => {
             try {
-                const response = await api.get("./list-time-zone", {
-                    params: {
-                        key: import.meta.env.VITE_TIMEZONEDB_API_KEY,
-                        format: "json"
-                    }
-                });
+                const response = await api.get("./list-timezones");
                 const zones = response.data.zones.map(zone => zone.zoneName);
                 setTimezoneList(zones);
             } catch (err) {
