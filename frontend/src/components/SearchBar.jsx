@@ -9,7 +9,7 @@ export default function ComboBox() {
     useEffect(() => {
         const fetchTimezoneList = async () => {
             try {
-                const response = await api.get("./list-timezones");
+                const response = await api.get("/list-timezones");
                 const zones = response.data.zones.map(zone => zone.zoneName);
                 setTimezoneList(zones);
             } catch (err) {

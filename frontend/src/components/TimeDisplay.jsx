@@ -10,14 +10,7 @@ export default function TimeDisplay() {
     useEffect(() => {
         const fetchTimezone = async () => {
             try {
-                const response = await api.get("./get-time-zone", {
-                    params: {
-                        key: import.meta.env.VITE_TIMEZONEDB_API_KEY,
-                        format: "json",
-                        by: "zone",
-                        zone: "America/Fortaleza"
-                    }
-                });
+                const response = await api.get("/timezone");
                 setTimezone(response.data);
                 const timeString = response.data.formatted.split(" ")[1];
                 const [hours, minutes, seconds] = timeString.split(":");
