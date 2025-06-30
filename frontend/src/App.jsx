@@ -2,17 +2,16 @@ import React, { useEffect, useState } from "react";
 import styles from './App.module.css';
 import TimeDisplay from './components/TimeDisplay.jsx';
 import api from './services/api.js';
-import SearchBar from './components/SearchBar.jsx';
+import ComboBox from './components/ComboBox.jsx';
 
 export default function App() {
-
+  const [selectedTimezone, setSelectedTimezone] = useState("");
   
-
-  return (
+  return (  
     <>
       <main className={styles.main}>
-        <SearchBar />
-        <TimeDisplay></TimeDisplay>
+        <ComboBox onTimezoneChange={setSelectedTimezone} />
+        <TimeDisplay timezoneName={selectedTimezone}></TimeDisplay>
       </main>
     </>
   )

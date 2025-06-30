@@ -3,8 +3,9 @@ import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import api from '../services/api.js';
 
-export default function ComboBox() {
+export default function ComboBox({ onTimezoneChange }) {
     const [timezoneList, setTimezoneList] = useState([]);
+    const [selectedTimezone, setSelectedTimezone] = useState(null);
 
     useEffect(() => {
         const fetchTimezoneList = async () => {
@@ -19,12 +20,20 @@ export default function ComboBox() {
         fetchTimezoneList();
     }, []);
 
+    const handleTimezoneChange = (event, newValue) => {
+        if (newValue) {
+            onTimezoneChange(newValue);
+            console.log("Selected timezone:", newValue);
+        }
+    }
+
     return (
         <Autocomplete
             disablePortal
             options={timezoneList}
             sx={{ width: 300 }}
             renderInput={(params) => <TextField {...params} label="Select timezone" />}
+            onChange={handleTimezoneChange}
         />
     );
 }

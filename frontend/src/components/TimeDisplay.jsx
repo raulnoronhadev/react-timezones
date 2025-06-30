@@ -3,16 +3,15 @@ import style from './TimeDisplay.module.css'
 import api from '../services/api.js';
 import InfosDisplay from './InfosDisplay.jsx';
 
-export default function TimeDisplay() {
+export default function TimeDisplay({ timezoneName }) {
     const [timezone, setTimezone] = useState();
     const [currentTime, setCurrentTime] = useState({ hours: 0, minutes: 0, seconds: 0 });
 
     useEffect(() => {
         const fetchTimezone = async () => {
             try {
-                const response = await api.get("/timezone", {
-                    params: { zone: "America/Fortaleza" }
-                });
+                if (!timezoneName) return;
+                const response = await api.get(`/timezone?format=json&by=zone&zone=${timezoneName}`);
                 setTimezone(response.data);
                 const timeString = response.data.formatted.split(" ")[1];
                 const [hours, minutes, seconds] = timeString.split(":");
@@ -24,8 +23,11 @@ export default function TimeDisplay() {
             } catch (err) {
                 console.error("Error detected:", err);
             }
-        }
+        };
         fetchTimezone();
+    }, [timezoneName]);
+
+    useEffect(() => {
         const intervalId = setInterval(() => {
             setCurrentTime(prevTime => {
                 let newSeconds = prevTime.seconds + 1;
